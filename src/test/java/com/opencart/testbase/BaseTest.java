@@ -40,6 +40,6 @@ public class BaseTest {
     public String randomAlphaNumeric(){
         String rString = RandomStringUtils.randomAlphabetic(3);
         String rNumber = RandomStringUtils.randomNumeric(3);
-        return (rString+"@"+rNumber);
+        return (rString+rNumber);
     }
 }

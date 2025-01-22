@@ -6,7 +6,7 @@ import com.opencart.testbase.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TC001_AccountRegistrationTest extends BaseTest {
+public class AccountRegistrationTest extends BaseTest {
 
     @Test
     public void testAccountRegistration() {
