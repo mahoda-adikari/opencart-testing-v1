@@ -10,24 +10,40 @@ public class AccountRegistrationTest extends BaseTest {
 
     @Test
     public void testAccountRegistration() {
-        HomePage homePage = new HomePage(driver);
-        homePage.clickMyAccount();
-        homePage.clickRegister();
 
-        AccountRegistrationPage regPage = new AccountRegistrationPage(driver);
-        regPage.setTxtFirstName(randomString().toUpperCase());
-        regPage.setTxtLastName(randomString().toUpperCase());
-        regPage.setTxtEmail(randomString()+"@zmail.com");
-        regPage.setTxtTelephone(randomNumber());
+        logger.info("Starting test case - testAccountRegistration");
 
-        String password = randomAlphaNumeric();
-        regPage.setTxtPassword(password);
-        regPage.setTxtConfirmPassword(password);
+        try {
+            HomePage homePage = new HomePage(driver);
+            homePage.clickMyAccount();
+            logger.info("Clicked MyAccount link");
+            homePage.clickRegister();
+            logger.info("Clicked Register link");
 
-        regPage.setChkdPrivacyPolicy();
-        regPage.setBtnContinue();
+            AccountRegistrationPage regPage = new AccountRegistrationPage(driver);
 
-        String confMsg = regPage.getMsgConfirmation();
-        Assert.assertEquals(confMsg, "Your Account Has Been Created!");
+            logger.info("Providing customer details");
+            regPage.setTxtFirstName(randomString().toUpperCase());
+            regPage.setTxtLastName(randomString().toUpperCase());
+            regPage.setTxtEmail(randomString()+"@zmail.com");
+            regPage.setTxtTelephone(randomNumber());
+
+            String password = randomAlphaNumeric();
+            regPage.setTxtPassword(password);
+            regPage.setTxtConfirmPassword(password);
+
+            regPage.setChkdPrivacyPolicy();
+            regPage.setBtnContinue();
+
+            logger.info("Validating expected message...");
+            String confMsg = regPage.getMsgConfirmation();
+            Assert.assertEquals(confMsg, "Your Account Has Been Created!");
+        } catch (Throwable e) {
+            logger.error("Test failed!");
+            logger.debug("Debug log...");
+            Assert.fail();
+        }
+
+        logger.info("Finished executing test case - testAccountRegistration");
     }
 }

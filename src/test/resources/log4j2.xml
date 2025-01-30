@@ -28,8 +28,8 @@
     </Appenders>
 
     <Loggers>
-        <Root level="Info">
-<!--            <AppenderRef ref="Console"/>-->
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Root>
     </Loggers>
