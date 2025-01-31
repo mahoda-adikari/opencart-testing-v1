@@ -12,17 +12,26 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 
 public class BaseTest {
 
     public WebDriver driver;
     public WebDriverWait wait;
     public Logger logger;
+    public Properties properties;
 
     @BeforeClass
     @Parameters({"os", "browser"})
-    public void setup(String os, String browser){
+    public void setup(String os, String browser) throws IOException {
+        FileReader file = new FileReader("./src/test/resources/config.properties");
+        properties = new Properties();
+        properties.load(file);
+
         logger = LogManager.getLogger(this.getClass());
 
         logger.info("Setting up WebDriver...");
@@ -37,7 +46,7 @@ public class BaseTest {
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        driver.get("https://tutorialsninja.com/demo/");
+        driver.get(properties.getProperty("appURL"));
         driver.manage().window().maximize();
         logger.info("Browser launched and maximized.");
     }
