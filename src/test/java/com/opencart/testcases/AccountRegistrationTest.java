@@ -21,7 +21,6 @@ public class AccountRegistrationTest extends BaseTest {
             logger.info("Clicked Register link");
 
             AccountRegistrationPage regPage = new AccountRegistrationPage(driver);
-
             logger.info("Providing customer details");
             regPage.setTxtFirstName(randomString().toUpperCase());
             regPage.setTxtLastName(randomString().toUpperCase());
@@ -33,7 +32,7 @@ public class AccountRegistrationTest extends BaseTest {
             regPage.setTxtConfirmPassword(password);
 
             regPage.setChkdPrivacyPolicy();
-            regPage.setBtnContinue();
+            regPage.clickBtnContinue();
 
             logger.info("Validating expected message...");
             String confMsg = regPage.getMsgConfirmation();
