@@ -67,7 +67,7 @@ public class AccountRegistrationPage extends BasePage {
         clickElement(chkdPrivacyPolicy);
     }
 
-    public void setBtnContinue() {
+    public void clickBtnContinue() {
         clickElement(btnContinue);
     }
 
