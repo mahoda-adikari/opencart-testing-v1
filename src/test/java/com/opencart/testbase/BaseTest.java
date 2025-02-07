@@ -12,7 +12,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
@@ -26,8 +25,8 @@ public class BaseTest {
     public Properties properties;
 
     @BeforeClass
-    @Parameters({"os", "browser"})
-    public void setup(String os, String browser) throws IOException {
+//    @Parameters({"os", "browser"})
+    public void setup() throws IOException {
         FileReader file = new FileReader("./src/test/resources/config.properties");
         properties = new Properties();
         properties.load(file);
@@ -35,12 +34,14 @@ public class BaseTest {
         logger = LogManager.getLogger(this.getClass());
 
         logger.info("Setting up WebDriver...");
-        switch (browser.toLowerCase()){
-            case "chrome": driver = new ChromeDriver(); break;
-            case "firefox": driver = new FirefoxDriver(); break;
-            case "edge": driver = new EdgeDriver(); break;
-            default: System.out.println("Invalid browser name!"); return;
-        }
+//        switch (browser.toLowerCase()){
+//            case "chrome": driver = new ChromeDriver(); break;
+//            case "firefox": driver = new FirefoxDriver(); break;
+//            case "edge": driver = new EdgeDriver(); break;
+//            default: System.out.println("Invalid browser name!"); return;
+//        }
+
+        driver = new ChromeDriver();
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().deleteAllCookies();

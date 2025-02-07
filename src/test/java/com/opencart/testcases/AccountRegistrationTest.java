@@ -34,12 +34,13 @@ public class AccountRegistrationTest extends BaseTest {
             regPage.setChkdPrivacyPolicy();
             regPage.clickBtnContinue();
 
-            logger.info("Validating expected message...");
+            logger.info("Validating account registration...");
             String confMsg = regPage.getMsgConfirmation();
             Assert.assertEquals(confMsg, "Your Account Has Been Created!");
+            logger.info("Test passed!");
         } catch (Throwable e) {
             logger.error("Test failed!");
-            logger.debug("Debug log...");
+            logger.debug("Debug log - testAccountRegistration...");
             Assert.fail();
         }
 
