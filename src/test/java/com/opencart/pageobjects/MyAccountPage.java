@@ -14,11 +14,11 @@ public class MyAccountPage extends BasePage{
     WebElement myAccConfirmation;
 
 
-    public String getMyAccConfirmation() {
+    public Boolean isMyAccountDisplayed() {
         try {
-            return myAccConfirmation.getText();
+            return myAccConfirmation.isDisplayed();
         } catch (Exception e){
-            return e.getMessage();
+            return false;
         }
     }
 }
