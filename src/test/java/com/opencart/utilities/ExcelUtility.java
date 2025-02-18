@@ -7,7 +7,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ExcelUtility {
@@ -52,6 +54,43 @@ public class ExcelUtility {
                 return formatter.formatCellValue(cell);
             } catch (Exception e) {
                 return "";
+            }
+        }
+    }
+
+    public void setCellData(String sheetName, int rowNum, int colNum, String data) throws IOException {
+        File excelFile = new File(path);
+        if (!excelFile.exists()) {
+            try (XSSFWorkbook workbook = new XSSFWorkbook();
+                 FileOutputStream fo = new FileOutputStream(path)) {
+
+                workbook.write(fo);
+            }
+        }
+
+        try (FileInputStream fi = new FileInputStream(path);
+             XSSFWorkbook workbook = new XSSFWorkbook(fi)) {
+
+            if (workbook.getSheetIndex(sheetName) == -1) {
+                workbook.createSheet(sheetName);
+            }
+            XSSFSheet sheet = workbook.getSheet(sheetName);
+
+            if (sheet.getRow(rowNum) == null) {
+                sheet.createRow(rowNum);
+            }
+            XSSFRow row = sheet.getRow(rowNum);
+
+            XSSFCell cell;
+            if (row.getCell(colNum) == null) {
+                cell = row.createCell(colNum);
+            } else {
+                cell = row.getCell(colNum);
+            }
+            cell.setCellValue(data);
+
+            try (FileOutputStream fo = new FileOutputStream(path)){
+                workbook.write(fo);
             }
         }
     }
