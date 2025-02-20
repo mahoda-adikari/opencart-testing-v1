@@ -1,7 +1,6 @@
 package com.opencart.utilities;
 
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -15,7 +14,6 @@ import java.io.IOException;
 public class ExcelUtility {
 
     private final String path;
-    private CellStyle style;
 
     public ExcelUtility(String path) {
         this.path = path;
@@ -90,6 +88,58 @@ public class ExcelUtility {
             cell.setCellValue(data);
 
             try (FileOutputStream fo = new FileOutputStream(path)){
+                workbook.write(fo);
+            }
+        }
+    }
+
+    public void fillGreenColour (String sheetName, int rowNum, int colNum) throws IOException {
+        try (FileInputStream fi = new FileInputStream(path);
+             XSSFWorkbook workbook = new XSSFWorkbook(fi)) {
+
+            XSSFSheet sheet = workbook.getSheet(sheetName);
+            XSSFRow row = sheet.getRow(rowNum);
+
+            XSSFCell cell;
+            if (row.getCell(colNum) == null) {
+                cell = row.createCell(colNum);
+            } else {
+                cell = row.getCell(colNum);
+            }
+
+            CellStyle style = workbook.createCellStyle();
+            style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            cell.setCellStyle(style);
+
+            try (FileOutputStream fo = new FileOutputStream(path)) {
+                workbook.write(fo);
+            }
+        }
+    }
+
+    public void fillRedColour (String sheetName, int rowNum, int colNum) throws IOException {
+        try (FileInputStream fi = new FileInputStream(path);
+             XSSFWorkbook workbook = new XSSFWorkbook(fi)) {
+
+            XSSFSheet sheet = workbook.getSheet(sheetName);
+            XSSFRow row = sheet.getRow(rowNum);
+
+            XSSFCell cell;
+            if (row.getCell(colNum) == null) {
+                cell = row.createCell(colNum);
+            } else {
+                cell = row.getCell(colNum);
+            }
+
+            CellStyle style = workbook.createCellStyle();
+            style.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            cell.setCellStyle(style);
+
+            try (FileOutputStream fo = new FileOutputStream(path)) {
                 workbook.write(fo);
             }
         }
