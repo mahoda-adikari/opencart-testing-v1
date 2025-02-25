@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 public class LoginTest extends BaseTest {
 
     @Test
-    public void testLogin(){
+    public void testLogin() {
 
         logger.info("Starting test case - testLogin");
 
