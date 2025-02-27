@@ -29,12 +29,12 @@ public class LoginTest extends BaseTest {
 
             logger.info("Validating login...");
             MyAccountPage myAccountPage = new MyAccountPage(driver);
-            Boolean isMyAccountDisplayed = myAccountPage.isMyAccountDisplayed();
+            boolean isMyAccountDisplayed = myAccountPage.isMyAccountDisplayed();
             Assert.assertEquals(isMyAccountDisplayed, true);
             logger.info("Test passed!");
         } catch (Exception e) {
-            logger.error("Test failed!");
-            logger.debug("Debug log - testLogin...");
+            logger.error("Test failed with exception: "+ e.getMessage(), e);
+            logger.debug("Test failed due to exception: "+ e.getMessage());
             Assert.fail();
         }
 

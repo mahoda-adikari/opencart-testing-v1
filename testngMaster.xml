@@ -6,8 +6,9 @@
         <parameter name="os" value="windows"/>
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="com.opencart.testcases.AccountRegistrationTest" />
-            <class name="com.opencart.testcases.LoginTest" />
+<!--            <class name="com.opencart.testcases.AccountRegistrationTest" />-->
+<!--            <class name="com.opencart.testcases.LoginTest" />-->
+            <class name="com.opencart.testcases.DataDrivenLoginTest"/>
         </classes>
     </test>
 </suite>

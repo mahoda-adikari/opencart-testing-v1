@@ -39,8 +39,8 @@ public class AccountRegistrationTest extends BaseTest {
             Assert.assertEquals(confMsg, "Your Account Has Been Created!");
             logger.info("Test passed!");
         } catch (Throwable e) {
-            logger.error("Test failed!");
-            logger.debug("Debug log - testAccountRegistration...");
+            logger.error("Test failed with exception: "+ e.getMessage(), e);
+            logger.debug("Test failed due to exception: "+ e.getMessage());
             Assert.fail();
         }
 
