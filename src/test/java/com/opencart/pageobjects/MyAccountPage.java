@@ -17,7 +17,7 @@ public class MyAccountPage extends BasePage{
     WebElement btnLogout;
 
 
-    public Boolean isMyAccountDisplayed() {
+    public boolean isMyAccountDisplayed() {
         try {
             return myAccConfirmation.isDisplayed();
         } catch (Exception e){

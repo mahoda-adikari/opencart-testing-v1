@@ -19,7 +19,7 @@ public class DataProviderUtility {
         String loginData[][] = new String[rowCount][cellCount];
 
         for (int i = 1; i <= rowCount; i++) {
-            for (int j = 1; j <= cellCount; j++) {
+            for (int j = 0; j < cellCount; j++) {
                 loginData[i-1][j] = excelUtils.getCellData(sheetName, i, j);
             }
         }
