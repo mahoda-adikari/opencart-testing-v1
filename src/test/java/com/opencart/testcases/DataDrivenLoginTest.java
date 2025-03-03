@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 public class DataDrivenLoginTest extends BaseTest {
 
-    @Test(dataProvider = "loginData", dataProviderClass = DataProviderUtility.class)
+    @Test(dataProvider = "loginData", dataProviderClass = DataProviderUtility.class, groups = "DataDriven")
     public void testLoginDataDriven(String email, String password, String expVal) {
 
         logger.info("Starting test case - testLoginDataDriven with email: "+email);

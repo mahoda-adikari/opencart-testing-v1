@@ -24,9 +24,9 @@ public class BaseTest {
     public Logger logger;
     public Properties properties;
 
-    @BeforeClass
-//    @Parameters({"os", "browser"})
-    public void setup() throws IOException {
+    @BeforeClass(alwaysRun = true)
+    @Parameters({"os", "browser"})
+    public void setup(String os, String browser) throws IOException {
         FileReader file = new FileReader("./src/test/resources/config.properties");
         properties = new Properties();
         properties.load(file);
@@ -34,14 +34,12 @@ public class BaseTest {
         logger = LogManager.getLogger(this.getClass());
 
         logger.info("Setting up WebDriver...");
-//        switch (browser.toLowerCase()){
-//            case "chrome": driver = new ChromeDriver(); break;
-//            case "firefox": driver = new FirefoxDriver(); break;
-//            case "edge": driver = new EdgeDriver(); break;
-//            default: System.out.println("Invalid browser name!"); return;
-//        }
-
-        driver = new ChromeDriver();
+        switch (browser.toLowerCase()){
+            case "chrome": driver = new ChromeDriver(); break;
+            case "firefox": driver = new FirefoxDriver(); break;
+            case "edge": driver = new EdgeDriver(); break;
+            default: System.out.println("Invalid browser name!"); return;
+        }
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().deleteAllCookies();
@@ -52,7 +50,7 @@ public class BaseTest {
         logger.info("Browser launched and maximized.");
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void tearDown(){
         driver.quit();
         logger.info("Browser closed.");
