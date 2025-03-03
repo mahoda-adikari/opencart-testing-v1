@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class AccountRegistrationTest extends BaseTest {
 
-    @Test
+    @Test(groups = {"Regression", "Master"})
     public void testAccountRegistration() {
 
         logger.info("Starting test case - testAccountRegistration");

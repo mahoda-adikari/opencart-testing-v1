@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
 
-    @Test
+    @Test(groups = {"Sanity", "Master"})
     public void testLogin() {
 
         logger.info("Starting test case - testLogin");
@@ -33,8 +33,8 @@ public class LoginTest extends BaseTest {
             Assert.assertEquals(isMyAccountDisplayed, true);
             logger.info("Test passed!");
         } catch (Exception e) {
-            logger.error("Test failed with exception: "+ e.getMessage(), e);
-            logger.debug("Test failed due to exception: "+ e.getMessage());
+            logger.error("Test failed with exception: " + e.getMessage(), e);
+            logger.debug("Test failed due to exception: " + e.getMessage());
             Assert.fail();
         }
 
