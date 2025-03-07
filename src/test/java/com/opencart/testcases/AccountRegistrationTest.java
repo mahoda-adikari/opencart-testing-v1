@@ -14,13 +14,13 @@ public class AccountRegistrationTest extends BaseTest {
         logger.info("Starting test case - testAccountRegistration");
 
         try {
-            HomePage homePage = new HomePage(driver);
+            HomePage homePage = new HomePage(getDriver());
             homePage.clickMyAccount();
             logger.info("Clicked MyAccount link");
             homePage.clickRegister();
             logger.info("Clicked Register link");
 
-            AccountRegistrationPage regPage = new AccountRegistrationPage(driver);
+            AccountRegistrationPage regPage = new AccountRegistrationPage(getDriver());
             logger.info("Providing customer details");
             regPage.setTxtFirstName(randomString().toUpperCase());
             regPage.setTxtLastName(randomString().toUpperCase());

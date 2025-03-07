@@ -19,10 +19,30 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    public WebDriver driver;
-    public WebDriverWait wait;
+    private ThreadLocal<WebDriver> tDriver = new ThreadLocal<>();
+    private ThreadLocal<WebDriverWait> tWait = new ThreadLocal<>();
     public Logger logger;
-    public Properties properties;
+    private Properties properties;
+
+    public void setDriver(WebDriver driver) {
+        tDriver.set(driver);
+    }
+
+    public WebDriver getDriver() {
+        return tDriver.get();
+    }
+
+    public void setWait(WebDriverWait wait) {
+        tWait.set(wait);
+    }
+
+    public WebDriverWait getWait() {
+        return tWait.get();
+    }
+
+    public String getProperty (String key) {
+        return properties.getProperty(key);
+    }
 
     @BeforeClass(alwaysRun = true)
     @Parameters({"os", "browser"})
@@ -34,26 +54,35 @@ public class BaseTest {
         logger = LogManager.getLogger(this.getClass());
 
         logger.info("Setting up WebDriver...");
+        WebDriver driver;
         switch (browser.toLowerCase()){
             case "chrome": driver = new ChromeDriver(); break;
             case "firefox": driver = new FirefoxDriver(); break;
             case "edge": driver = new EdgeDriver(); break;
             default: System.out.println("Invalid browser name!"); return;
         }
+        setDriver(driver);
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        setWait(wait);
 
-        driver.get(properties.getProperty("appURL"));
-        driver.manage().window().maximize();
+        getDriver().manage().deleteAllCookies();
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        getDriver().get(getProperty("appURL"));
+        getDriver().manage().window().maximize();
         logger.info("Browser launched and maximized.");
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown(){
-        driver.quit();
-        logger.info("Browser closed.");
+        WebDriver driver = getDriver();
+        if (driver != null) {
+            driver.quit();
+            logger.info("Browser closed.");
+        }
+        tDriver.remove();
+        tWait.remove();
     }
 
     public String randomString(){
