@@ -15,22 +15,22 @@ public class LoginTest extends BaseTest {
         logger.info("Starting test case - testLogin");
 
         try {
-            HomePage homePage = new HomePage(driver);
+            HomePage homePage = new HomePage(getDriver());
             homePage.clickMyAccount();
             logger.info("Clicked MyAccount link");
             homePage.clickLogin();
             logger.info("Clicked Login link");
 
-            LoginPage loginPage = new LoginPage(driver);
+            LoginPage loginPage = new LoginPage(getDriver());
             logger.info("Providing login details");
-            loginPage.setTxtEmail(properties.getProperty("email"));
-            loginPage.setTxtPassword(properties.getProperty("password"));
+            loginPage.setTxtEmail(getProperty("email"));
+            loginPage.setTxtPassword(getProperty("password"));
             loginPage.clickBtnLogin();
 
             logger.info("Validating login...");
-            MyAccountPage myAccountPage = new MyAccountPage(driver);
+            MyAccountPage myAccountPage = new MyAccountPage(getDriver());
             boolean isMyAccountDisplayed = myAccountPage.isMyAccountDisplayed();
-            Assert.assertEquals(isMyAccountDisplayed, true);
+            Assert.assertTrue(isMyAccountDisplayed);
             logger.info("Test passed!");
         } catch (Exception e) {
             logger.error("Test failed with exception: " + e.getMessage(), e);

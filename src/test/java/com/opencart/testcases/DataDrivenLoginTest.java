@@ -16,16 +16,16 @@ public class DataDrivenLoginTest extends BaseTest {
         logger.info("Starting test case - testLoginDataDriven with email: "+email);
 
         try {
-            HomePage homePage = new HomePage(driver);
+            HomePage homePage = new HomePage(getDriver());
             homePage.clickMyAccount();
             homePage.clickLogin();
 
-            LoginPage loginPage = new LoginPage(driver);
+            LoginPage loginPage = new LoginPage(getDriver());
             loginPage.setTxtEmail(email);
             loginPage.setTxtPassword(password);
             loginPage.clickBtnLogin();
 
-            MyAccountPage myAccountPage = new MyAccountPage(driver);
+            MyAccountPage myAccountPage = new MyAccountPage(getDriver());
             boolean isMyAccountPageDisplayed = myAccountPage.isMyAccountDisplayed();
 
             if (expVal.equalsIgnoreCase("Valid")) {
