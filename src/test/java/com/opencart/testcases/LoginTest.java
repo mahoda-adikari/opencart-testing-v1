@@ -35,10 +35,9 @@ public class LoginTest extends BaseTest {
         } catch (Exception e) {
             logger.error("Test failed with exception: " + e.getMessage(), e);
             logger.debug("Test failed due to exception: " + e.getMessage());
-            Assert.fail();
+            Assert.fail("Test failed with exception: "+ e.getMessage());
+        } finally {
+            logger.info("Finished executing test case - testLogin");
         }
-
-        logger.info("Finished executing test case - testLogin");
-
     }
 }
