@@ -14,6 +14,8 @@ public class DataDrivenLoginTest extends BaseTest {
     public void testLoginDataDriven(String email, String password, String expVal) {
 
         logger.info("Starting test case - testLoginDataDriven with email: "+email);
+        MyAccountPage myAccountPage = null;
+        boolean isMyAccountPageDisplayed = false;
 
         try {
             HomePage homePage = new HomePage(getDriver());
@@ -25,27 +27,29 @@ public class DataDrivenLoginTest extends BaseTest {
             loginPage.setTxtPassword(password);
             loginPage.clickBtnLogin();
 
-            MyAccountPage myAccountPage = new MyAccountPage(getDriver());
-            boolean isMyAccountPageDisplayed = myAccountPage.isMyAccountDisplayed();
+            myAccountPage = new MyAccountPage(getDriver());
+            isMyAccountPageDisplayed = myAccountPage.isMyAccountDisplayed();
 
             if (expVal.equalsIgnoreCase("Valid")) {
                 Assert.assertTrue(isMyAccountPageDisplayed, "Expected valid login to succeed but My Account page was not displayed");
-                if (isMyAccountPageDisplayed) {
-                    myAccountPage.clickBtnLogout();
-                }
             } else if (expVal.equalsIgnoreCase("Invalid")) {
                 Assert.assertFalse(isMyAccountPageDisplayed, "Expected invalid login to fail but My Account page was displayed");
-                if (isMyAccountPageDisplayed) {
-                    myAccountPage.clickBtnLogout();
-                }
             }
 
         } catch (Exception e) {
             logger.error("Test failed with exception: "+ e.getMessage(), e);
             logger.debug("Test failed due to exception: "+ e.getMessage());
-            Assert.fail();
+            Assert.fail("Test failed with exception: "+ e.getMessage());
+        } finally {
+            try {
+                if (isMyAccountPageDisplayed && myAccountPage != null) {
+                    logger.info("Performing logout as user was logged in");
+                    myAccountPage.clickBtnLogout();
+                }
+            } catch (Exception e) {
+                logger.error("Failed to logout: "+ e.getMessage(), e);
+            }
+            logger.info("Finished executing test case - testLoginDataDriven with email: "+email);
         }
-
-        logger.info("Finished executing test case - testLoginDataDriven with email: "+email);
     }
 }

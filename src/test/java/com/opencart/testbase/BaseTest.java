@@ -8,9 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -44,7 +42,7 @@ public class BaseTest {
         return properties.getProperty(key);
     }
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"os", "browser"})
     public void setup(String os, String browser) throws IOException {
         FileReader file = new FileReader("./src/test/resources/config.properties");
@@ -74,7 +72,7 @@ public class BaseTest {
         logger.info("Browser launched and maximized.");
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void tearDown(){
         WebDriver driver = getDriver();
         if (driver != null) {
