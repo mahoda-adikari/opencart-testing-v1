@@ -2,13 +2,14 @@ package com.opencart.utilities;
 
 import org.testng.annotations.DataProvider;
 
+import java.io.File;
 import java.io.IOException;
 
 public class DataProviderUtility {
 
     @DataProvider(name = "loginData")
     public String[][] getLoginData() throws IOException {
-        String path = ".\\testdata\\OpenCart_LoginData.xlsx";
+        String path = "." + File.separator + "testdata" + File.separator + "OpenCart_LoginData.xlsx";
         String sheetName = "Sheet1";
 
         ExcelUtility excelUtils = new ExcelUtility(path);
