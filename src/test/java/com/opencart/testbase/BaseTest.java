@@ -1,8 +1,11 @@
 package com.opencart.testbase;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -10,9 +13,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Properties;
 
 public class BaseTest {
@@ -83,17 +89,44 @@ public class BaseTest {
         tWait.remove();
     }
 
-    public String randomString(){
+    public String captureScreen (String testName) {
+        try {
+            String SCREENSHOT_PATH = System.getProperty("user.dir") + File.separator + "screenshots" + File.separator;
+            File directory = new File(SCREENSHOT_PATH);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            WebDriver driver = getDriver();
+            if (driver == null) {
+                logger.error("Failed to capture screenshot: WebDriver instance is null");
+            }
+
+            String timeStamp = new SimpleDateFormat("yyyyMMdd-HHmmss-z").format(new Date());
+            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+            File sourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+            String targetFilePath = System.getProperty("user.dir") + File.separator + "screenshots" + File.separator + testName + "_" + timeStamp + ".png";
+
+            FileUtils.copyFile(sourceFile, new File(targetFilePath));
+            logger.info("Screenshot captured: " + targetFilePath);
+            return targetFilePath;
+        } catch (Exception e) {
+            logger.error("Failed to capture screenshot" + e.getMessage());
+            return "";
+        }
+    }
+
+    public static String randomString(){
         String rString = RandomStringUtils.randomAlphabetic(5);
         return rString;
     }
 
-    public String randomNumber(){
+    public static String randomNumber(){
         String rNumber = RandomStringUtils.randomNumeric(10);
         return rNumber;
     }
 
-    public String randomAlphaNumeric(){
+    public static String randomAlphaNumeric(){
         String rString = RandomStringUtils.randomAlphabetic(3);
         String rNumber = RandomStringUtils.randomNumeric(3);
         return (rString+rNumber);

@@ -42,7 +42,7 @@ public class DataDrivenLoginTest extends BaseTest {
             Assert.fail("Test failed with exception: "+ e.getMessage());
         } finally {
             try {
-                if (isMyAccountPageDisplayed && myAccountPage != null) {
+                if (isMyAccountPageDisplayed) {
                     logger.info("Performing logout as user was logged in");
                     myAccountPage.clickBtnLogout();
                 }
