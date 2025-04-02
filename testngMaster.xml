@@ -2,13 +2,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="OpenCart Test Suite Master">
+    <listeners>
+        <listener class-name="com.opencart.utilities.TestListener"/>
+    </listeners>
     <test name="User Authentication Tests" thread-count="5">
         <parameter name="os" value="windows"/>
         <parameter name="browser" value="chrome"/>
         <classes>
-<!--            <class name="com.opencart.testcases.AccountRegistrationTest" />-->
-<!--            <class name="com.opencart.testcases.LoginTest" />-->
-            <class name="com.opencart.testcases.DataDrivenLoginTest"/>
+            <class name="com.opencart.testcases.AccountRegistrationTest" />
+            <class name="com.opencart.testcases.LoginTest" />
+<!--            <class name="com.opencart.testcases.DataDrivenLoginTest"/>-->
         </classes>
     </test>
 </suite>

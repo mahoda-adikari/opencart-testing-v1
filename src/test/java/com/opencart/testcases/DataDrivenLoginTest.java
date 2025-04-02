@@ -13,7 +13,8 @@ public class DataDrivenLoginTest extends BaseTest {
     @Test(dataProvider = "loginData", dataProviderClass = DataProviderUtility.class, groups = "DataDriven")
     public void testLoginDataDriven(String email, String password, String expVal) {
 
-        logger.info("Starting test case - testLoginDataDriven with email: "+email);
+        getLogger().info("Starting test case - testLoginDataDriven with email: "+email);
+
         MyAccountPage myAccountPage = null;
         boolean isMyAccountPageDisplayed = false;
 
@@ -37,19 +38,19 @@ public class DataDrivenLoginTest extends BaseTest {
             }
 
         } catch (Exception e) {
-            logger.error("Test failed with exception: "+ e.getMessage(), e);
-            logger.debug("Test failed due to exception: "+ e.getMessage());
+            getLogger().error("Test failed with exception: "+ e.getMessage(), e);
+            getLogger().debug("Test failed due to exception: "+ e.getMessage());
             Assert.fail("Test failed with exception: "+ e.getMessage());
         } finally {
             try {
                 if (isMyAccountPageDisplayed) {
-                    logger.info("Performing logout as user was logged in");
+                    getLogger().info("Performing logout as user was logged in");
                     myAccountPage.clickBtnLogout();
                 }
             } catch (Exception e) {
-                logger.error("Failed to logout: "+ e.getMessage(), e);
+                getLogger().error("Failed to logout: "+ e.getMessage(), e);
             }
-            logger.info("Finished executing test case - testLoginDataDriven with email: "+email);
+            getLogger().info("Finished executing test case - testLoginDataDriven with email: "+email);
         }
     }
 }

@@ -11,17 +11,17 @@ public class AccountRegistrationTest extends BaseTest {
     @Test(groups = {"Regression", "Master"})
     public void testAccountRegistration() {
 
-        logger.info("Starting test case - testAccountRegistration");
+        getLogger().info("Starting test case - testAccountRegistration");
 
         try {
             HomePage homePage = new HomePage(getDriver());
             homePage.clickMyAccount();
-            logger.info("Clicked MyAccount link");
+            getLogger().info("Clicked MyAccount link");
             homePage.clickRegister();
-            logger.info("Clicked Register link");
+            getLogger().info("Clicked Register link");
 
             AccountRegistrationPage regPage = new AccountRegistrationPage(getDriver());
-            logger.info("Providing customer details");
+            getLogger().info("Providing customer details");
             regPage.setTxtFirstName(randomString().toUpperCase());
             regPage.setTxtLastName(randomString().toUpperCase());
             regPage.setTxtEmail(randomString()+"@zmail.com");
@@ -34,16 +34,16 @@ public class AccountRegistrationTest extends BaseTest {
             regPage.setChkdPrivacyPolicy();
             regPage.clickBtnContinue();
 
-            logger.info("Validating account registration...");
+            getLogger().info("Validating account registration...");
             String confMsg = regPage.getMsgConfirmation();
             Assert.assertEquals(confMsg, "Your Account Has Been Created!");
-            logger.info("Test passed!");
+            getLogger().info("Test passed!");
         } catch (Throwable e) {
-            logger.error("Test failed with exception: "+ e.getMessage(), e);
-            logger.debug("Test failed due to exception: "+ e.getMessage());
+            getLogger().error("Test failed with exception: "+ e.getMessage(), e);
+            getLogger().debug("Test failed due to exception: "+ e.getMessage());
             Assert.fail("Test failed with exception: "+ e.getMessage());
         } finally {
-            logger.info("Finished executing test case - testAccountRegistration");
+            getLogger().info("Finished executing test case - testAccountRegistration");
         }
     }
 }
