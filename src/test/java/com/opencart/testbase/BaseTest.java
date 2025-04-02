@@ -1,11 +1,8 @@
 package com.opencart.testbase;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -13,19 +10,16 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Date;
 import java.util.Properties;
 
 public class BaseTest {
 
     private ThreadLocal<WebDriver> tDriver = new ThreadLocal<>();
     private ThreadLocal<WebDriverWait> tWait = new ThreadLocal<>();
-    public Logger logger;
+    private ThreadLocal<Logger> tLogger = new ThreadLocal<>();
     private Properties properties;
 
     public void setDriver(WebDriver driver) {
@@ -33,7 +27,13 @@ public class BaseTest {
     }
 
     public WebDriver getDriver() {
-        return tDriver.get();
+        WebDriver driver = tDriver.get();
+        if (driver == null) {
+            System.out.println("WARNING: WebDriver is null!");
+            System.out.println("Current Thread: " + Thread.currentThread().getName());
+            Thread.dumpStack();
+        }
+        return driver;
     }
 
     public void setWait(WebDriverWait wait) {
@@ -42,6 +42,14 @@ public class BaseTest {
 
     public WebDriverWait getWait() {
         return tWait.get();
+    }
+
+    public void setLogger(Logger logger) {
+        tLogger.set(logger);
+    }
+
+    public Logger getLogger() {
+        return tLogger.get();
     }
 
     public String getProperty (String key) {
@@ -55,9 +63,10 @@ public class BaseTest {
         properties = new Properties();
         properties.load(file);
 
-        logger = LogManager.getLogger(this.getClass());
+        Logger logger = LogManager.getLogger(this.getClass());
+        setLogger(logger);
 
-        logger.info("Setting up WebDriver...");
+        getLogger().info("Setting up WebDriver...");
         WebDriver driver;
         switch (browser.toLowerCase()){
             case "chrome": driver = new ChromeDriver(); break;
@@ -75,45 +84,21 @@ public class BaseTest {
 
         getDriver().get(getProperty("appURL"));
         getDriver().manage().window().maximize();
-        logger.info("Browser launched and maximized.");
+        getLogger().info("Browser launched and maximized.");
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown(){
+        getLogger().info("Tearing down...");
+        System.out.println("tearDown Thread: " + Thread.currentThread().getName());
         WebDriver driver = getDriver();
         if (driver != null) {
             driver.quit();
-            logger.info("Browser closed.");
+            getLogger().info("Browser closed.");
         }
         tDriver.remove();
         tWait.remove();
-    }
-
-    public String captureScreen (String testName) {
-        try {
-            String SCREENSHOT_PATH = System.getProperty("user.dir") + File.separator + "screenshots" + File.separator;
-            File directory = new File(SCREENSHOT_PATH);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-
-            WebDriver driver = getDriver();
-            if (driver == null) {
-                logger.error("Failed to capture screenshot: WebDriver instance is null");
-            }
-
-            String timeStamp = new SimpleDateFormat("yyyyMMdd-HHmmss-z").format(new Date());
-            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
-            File sourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
-            String targetFilePath = System.getProperty("user.dir") + File.separator + "screenshots" + File.separator + testName + "_" + timeStamp + ".png";
-
-            FileUtils.copyFile(sourceFile, new File(targetFilePath));
-            logger.info("Screenshot captured: " + targetFilePath);
-            return targetFilePath;
-        } catch (Exception e) {
-            logger.error("Failed to capture screenshot" + e.getMessage());
-            return "";
-        }
+        tLogger.remove();
     }
 
     public static String randomString(){

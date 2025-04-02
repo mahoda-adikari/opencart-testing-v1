@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="OpenCart Test Suite CrossBrowser" thread-count="5" parallel="tests">
+<suite name="OpenCart Test Suite CrossBrowser" thread-count="4" parallel="tests">
+    <listeners>
+        <listener class-name="com.opencart.utilities.TestListener"/>
+    </listeners>
     <test name="Account Registration Test - Chrome">
         <parameter name="os" value="windows"/>
         <parameter name="browser" value="chrome"/>
