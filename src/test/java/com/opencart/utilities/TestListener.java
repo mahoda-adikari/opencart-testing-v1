@@ -15,9 +15,9 @@ import org.apache.logging.log4j.Logger;
 
 public class TestListener implements ITestListener {
 
-    private static ExtentReports extent = ExtentReportManager.getInstance();
-    private static ThreadLocal<ExtentTest> tTest =  new ThreadLocal<>();
-    private static ThreadLocal<Logger> tLogger = new ThreadLocal<>();
+    private static final ExtentReports extent = ExtentReportManager.getInstance();
+    private static final ThreadLocal<ExtentTest> tTest =  new ThreadLocal<>();
+    private static final ThreadLocal<Logger> tLogger = new ThreadLocal<>();
 
     public void setTest(ExtentTest test) {
         tTest.set(test);
@@ -88,9 +88,7 @@ public class TestListener implements ITestListener {
             Object testInstance = result.getInstance();
             if (testInstance instanceof BaseTest) {
                 WebDriver driver = ((BaseTest) testInstance).getDriver();
-//                WebDriver driver = null;
-                String screenshotPath = "";
-                screenshotPath = ScreenshotUtility.captureScreen(driver, result.getMethod().getMethodName());
+                String screenshotPath = ScreenshotUtility.captureScreen(driver, result.getMethod().getMethodName());
                 getTest().log(Status.FAIL, "Test Failed: " + result.getThrowable());
                 try {
                     getTest().addScreenCaptureFromPath(screenshotPath);
