@@ -2,15 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="OpenCart Test Suite Grouping">
-
     <groups>
         <run>
             <include name="Sanity"/>
             <include name="Regression"/>
             <include name="Master"/>
-            <exclude name="DataDriven"/>
+            <include name="DataDriven"/>
         </run>
     </groups>
+    <listeners>
+        <listener class-name="com.opencart.utilities.TestListener"/>
+    </listeners>
     <test name="User Authentication Tests" thread-count="5">
         <parameter name="os" value="windows"/>
         <parameter name="browser" value="chrome"/>

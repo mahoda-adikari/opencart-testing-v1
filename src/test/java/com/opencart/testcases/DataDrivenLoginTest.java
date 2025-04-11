@@ -32,9 +32,9 @@ public class DataDrivenLoginTest extends BaseTest {
             isMyAccountPageDisplayed = myAccountPage.isMyAccountDisplayed();
 
             if (expVal.equalsIgnoreCase("Valid")) {
-                Assert.assertTrue(isMyAccountPageDisplayed, "Expected valid login to succeed but My Account page was not displayed");
+                Assert.assertTrue(isMyAccountPageDisplayed, "Expected valid login to succeed but My Account page was not displayed.");
             } else if (expVal.equalsIgnoreCase("Invalid")) {
-                Assert.assertFalse(isMyAccountPageDisplayed, "Expected invalid login to fail but My Account page was displayed");
+                Assert.assertFalse(isMyAccountPageDisplayed, "Expected invalid login to fail but My Account page was displayed.");
             }
 
         } catch (Exception e) {

@@ -9,6 +9,9 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,6 +61,15 @@ public class TestListener implements ITestListener {
         try {
             getLogger().info("Finishing Test Suite: " + context.getName());
             ExtentReportManager.flushReport(extent);
+
+            File htmlFile = new File(ExtentReportManager.getLatestReportPath());
+            if (htmlFile.exists()) {
+                Desktop.getDesktop().browse(htmlFile.toURI());
+            } else {
+                getLogger().warn("Extent Report file was not found to open.");
+            }
+        } catch (IOException e) {
+            getLogger().error("Failed to open Extent Report in browser.", e);
         } finally {
             tTest.remove();
             tLogger.remove();
@@ -89,7 +101,8 @@ public class TestListener implements ITestListener {
             if (testInstance instanceof BaseTest) {
                 WebDriver driver = ((BaseTest) testInstance).getDriver();
                 String screenshotPath = ScreenshotUtility.captureScreen(driver, result.getMethod().getMethodName());
-                getTest().log(Status.FAIL, "Test Failed: " + result.getThrowable());
+                getTest().log(Status.FAIL, "Test Failed: " + result.getName());
+                getTest().log(Status.INFO, result.getThrowable().getMessage());
                 try {
                     getTest().addScreenCaptureFromPath(screenshotPath);
                 } catch (Exception e) {
@@ -105,7 +118,8 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestSkipped(ITestResult result) {
         try {
-            getTest().log(Status.SKIP, "Test Skipped: " + result.getThrowable());
+            getTest().log(Status.SKIP, "Test Skipped: " + result.getName());
+            getTest().log(Status.INFO, result.getThrowable().getMessage());
             getLogger().warn("Test Skipped: " + result.getMethod().getMethodName(), result.getThrowable());
         } finally {
             tTest.remove();
