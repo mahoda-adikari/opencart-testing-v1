@@ -12,6 +12,7 @@ public class ExtentReportManager {
 
     private static ExtentReports extent;
     private static final String REPORT_DIR = System.getProperty("user.dir") + File.separator + "reports" + File.separator;
+    private static String latestReportPath;
 
     public static ExtentReports getInstance() {
         if (extent == null) {
@@ -28,6 +29,7 @@ public class ExtentReportManager {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS_z").format(new Date());
         String reportPath = REPORT_DIR + "ExtentReport_" + timeStamp + ".html";
+        latestReportPath = reportPath;
 
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportPath);
         sparkReporter.config().setDocumentTitle("Opencart Automation Report");
@@ -49,5 +51,9 @@ public class ExtentReportManager {
         if (extent != null) {
             extent.flush();
         }
+    }
+
+    public static String getLatestReportPath() {
+        return latestReportPath;
     }
 }
