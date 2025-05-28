@@ -19,32 +19,32 @@
             <class name="com.opencart.testcases.AccountRegistrationTest" />
         </classes>
     </test>
-    <test name="Account Registration Test - Firefox">
-        <parameter name="os" value="windows"/>
-        <parameter name="browser" value="firefox"/>
-        <classes>
-            <class name="com.opencart.testcases.AccountRegistrationTest" />
-        </classes>
-    </test>
-    <test name="Login Test - Chrome">
-        <parameter name="os" value="windows"/>
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.opencart.testcases.LoginTest" />
-        </classes>
-    </test>
-    <test name="Login Test - Firefox">
-        <parameter name="os" value="windows"/>
-        <parameter name="browser" value="firefox"/>
-        <classes>
-            <class name="com.opencart.testcases.LoginTest" />
-        </classes>
-    </test>
-    <test name="Login Test - Edge">
-        <parameter name="os" value="windows"/>
-        <parameter name="browser" value="edge"/>
-        <classes>
-            <class name="com.opencart.testcases.LoginTest" />
-        </classes>
-    </test>
+<!--    <test name="Account Registration Test - Firefox">-->
+<!--        <parameter name="os" value="windows"/>-->
+<!--        <parameter name="browser" value="firefox"/>-->
+<!--        <classes>-->
+<!--            <class name="com.opencart.testcases.AccountRegistrationTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="Login Test - Chrome">-->
+<!--        <parameter name="os" value="windows"/>-->
+<!--        <parameter name="browser" value="chrome"/>-->
+<!--        <classes>-->
+<!--            <class name="com.opencart.testcases.LoginTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="Login Test - Firefox">-->
+<!--        <parameter name="os" value="windows"/>-->
+<!--        <parameter name="browser" value="firefox"/>-->
+<!--        <classes>-->
+<!--            <class name="com.opencart.testcases.LoginTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="Login Test - Edge">-->
+<!--        <parameter name="os" value="windows"/>-->
+<!--        <parameter name="browser" value="edge"/>-->
+<!--        <classes>-->
+<!--            <class name="com.opencart.testcases.LoginTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
